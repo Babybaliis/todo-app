@@ -2,6 +2,12 @@ import styled from 'styled-components'
 
 export const TaskItemDiv = styled.div`
 
+  color: ${({important}) => important ? 'purple' : 'black'};
+  font-weight: ${({important}) => important ? 'bold' : 'normal'};
+  text-decoration: ${({done}) => done ? 'line-through' : ''};
+
+  width:100%
+
 `
 export const Input = styled.input`
   text-align: center;
