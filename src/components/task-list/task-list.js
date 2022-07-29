@@ -9,8 +9,9 @@ const TaskList = ({tasks, onDeleted, changeTask}) => {
         return (
             <Li key={item.id}>
                 <Task {...itemProps} id={id}
-                     onDeleted={() => onDeleted(item.id)}
-                     changeTask={(item,callback) => changeTask(item,callback)}
+                      onDeleted={() => onDeleted(item.id)}
+                      changeTask={(item, callback) => changeTask(item, callback)}
+
                 />
             </Li>
         );
