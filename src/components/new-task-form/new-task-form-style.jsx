@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-
+import styled from "styled-components";
 
 export const H1 = styled.h1`
   position: absolute;
@@ -9,18 +8,15 @@ export const H1 = styled.h1`
   font-weight: 200;
   text-align: center;
   color: rgba(175, 47, 47, 0.15);
-  -webkit-text-rendering: optimizeLegibility;
-  -moz-text-rendering: optimizeLegibility;
   text-rendering: optimizeLegibility;
-`
+`;
 
 export const Input = styled.input.attrs({
-    type: 'text',
+  type: "text",
 })`
   ::placeholder {
     font-style: italic;
     font-weight: 300;
     color: rgba(0, 0, 0, 0.4);
   }
-  
-`
+`;

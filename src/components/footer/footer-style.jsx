@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Footers = styled.footer`
   align-items: center;
@@ -10,23 +10,24 @@ export const Footers = styled.footer`
   justify-content: space-between;
   padding: 10px 15px;
   text-align: center;
-`
+`;
 
 export const Span = styled.span`
   text-align: left;
-`
+`;
 
 export const Button = styled.button`
   border: 1px solid transparent;
-  border-color: ${({id,mode})=> mode.id===id?'rgba(175,47,47,.2)':''};
-  &:active{
-    border-color: rgba(175,47,47,.2);
+  border-color: ${({ id, mode }) =>
+    mode.id === id ? "rgba(175,47,47,.2)" : ""};
+  &:active {
+    border-color: rgba(175, 47, 47, 0.2);
   }
   &:hover {
-    border-color: rgba(175,47,47,.2);
+    border-color: rgba(175, 47, 47, 0.2);
   }
   &:focus {
-    border-color: rgba(175,47,47,.2);
+    border-color: rgba(175, 47, 47, 0.2);
   }
   border-radius: 3px;
   color: inherit;
@@ -34,7 +35,7 @@ export const Button = styled.button`
   margin: 3px;
   padding: 3px 7px;
   text-decoration: none;
-`
+`;
 export const Div = styled.div`
   display: flex;
-`
+`;
