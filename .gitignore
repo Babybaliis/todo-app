@@ -12,6 +12,8 @@
 /build
 /public
 /.idea
+.idea
+public
 
 # misc
 .DS_Store
