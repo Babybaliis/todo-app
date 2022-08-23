@@ -40,9 +40,9 @@ export const Label = styled.label`
 const Button = styled.button`
   position: absolute;
   top: 0;
-  bottom: -3px;
+  bottom: 0;
   width: 30px;
-  height: 40px;
+  height: 50px;
   font-size: 34px;
   color: #cc9a9a;
   margin: auto 0 11px;
@@ -65,6 +65,30 @@ export const ButtonDestroy = styled(Button)`
     content: "×";
   }
 `;
+
+export const ButtonPlay = styled.button`
+  font-size: 15px;
+  cursor: pointer;
+
+  :after {
+    content: "▶";
+  }
+`;
+
+export const ButtonStop = styled.button`
+  font-size: 15px;
+  cursor: pointer;
+  
+  :after {
+    content: "⏸";
+  }
+`;
+
+export const SpanTracker = styled.span`
+color: gray;
+font-size: 13px;
+width: 50px;
+`
 
 export const SpanTime = styled.span`
   color: gray;
