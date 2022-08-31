@@ -1,34 +1,37 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { H1, Input } from "./new-task-form-style";
+import PropTypes from "prop-types";
 
-export class AddNewTask extends Component {
-  state = {
-    label: "",
+const AddNewTask = ({ addItem }) => {
+  const [label, setLabel] = useState("");
+
+
+  const onLabelChange = (e) => {
+    setLabel(e.target.value);
   };
 
-  onLabelChange = (e) => {
-    this.setState({
-      label: e.target.value,
-    });
-  };
-
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    this.props.addItem(this.state.label, () => this.setState({ label: "" }));
+    addItem(label, () => setLabel(""));
   };
 
-  render() {
-    return (
-      <form onSubmit={this.onSubmit}>
-        <H1> todos</H1>
-        <Input
-          className="new-todo"
-          onChange={this.onLabelChange}
-          placeholder="What needs to be done?"
-          value={this.state.label}
-          autoFocus
-        />
-      </form>
-    );
-  }
-}
+
+  return (
+    <form onSubmit={onSubmit}>
+      <H1> todos</H1>
+      <Input
+        className="new-todo"
+        onChange={onLabelChange}
+        placeholder="What needs to be done?"
+        value={label}
+        autoFocus
+      />
+    </form>
+  );
+
+};
+
+AddNewTask.prototype = {
+  addItem: PropTypes.func.isRequired
+};
+export { AddNewTask };
