@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { H1, Input } from "./new-task-form-style";
 import PropTypes from "prop-types";
+import { Context } from "../context/Context";
 
-const AddNewTask = ({ addItem }) => {
+const AddNewTask = () => {
   const [label, setLabel] = useState("");
+  const {addItem}=useContext(Context)
 
 
   const onLabelChange = (e) => {

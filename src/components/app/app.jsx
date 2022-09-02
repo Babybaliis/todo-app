@@ -3,6 +3,7 @@ import { Section } from "./app-style";
 import { AddNewTask } from "../new-task-form";
 import { Footer } from "../footer";
 import { TaskList } from "../task-list";
+import { Context } from "../context/Context";
 
 
 export const MODE = [
@@ -31,8 +32,6 @@ const App = () => {
     { label: "Have a lunch", done: false, id: 3, time: randomDate() }
   ]);
   const [mode, setMode] = useState(MODE[0]);
-
-
 
 
   const changeTask = (item, callback) => {
@@ -64,22 +63,24 @@ const App = () => {
 
 
   return (
-    <Section>
-
-      <AddNewTask addItem={addItem} />
-      <TaskList
-        tasks={tasksData.filter(mode.filter)}
-        onDeleted={deleteItem}
-        changeTask={changeTask}
-      />
-      <Footer
-        setMode={(mode) => setMode( mode )}
-        mode={mode}
-        doneItemCount={tasksData.filter((item) => !item.done).length
-        }
-        clearDoneItem={clearDoneItem}
-      />
-    </Section>
+    <Context.Provider value={{
+      addItem,
+      clearDoneItem,
+      setMode,
+      deleteItem,
+      changeTask
+    }}>
+      <Section>
+        <AddNewTask />
+        <TaskList
+          tasks={tasksData.filter(mode.filter)}
+        />
+        <Footer
+          mode={mode}
+          doneItemCount={tasksData.filter((item) => !item.done).length}
+        />
+      </Section>
+    </Context.Provider>
   );
 };
 

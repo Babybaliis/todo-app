@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ButtonDestroy,
   ButtonEdit,
@@ -10,10 +10,11 @@ import {
 } from "./task-style";
 import "../../style.css";
 import { formatDistanceToNow } from "date-fns";
+import { Context } from "../context/Context";
 
-const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
+const Task = ({ done, label, id, time }) => {
   const emptyItem = {
-    done: done,
+    done: !!done ? done : false,
     label: label,
     id: id,
     time: time,
@@ -22,21 +23,25 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
     play: false
   };
   const [item, setItem] = useState(emptyItem);
+  const {deleteItem, changeTask}=useContext(Context)
+  const onDeleted=()=>deleteItem(item.id)
 
   useEffect(() => {
     let intervalId;
     if (item.play && !item.done) {
       intervalId = setInterval(() => {
-        setItem(prev => prev.tracker += 1);
-
+        let newItem = { ...item };
+        newItem.tracker += 1;
+        setItem(newItem);
       }, 1000);
     }
     return () => clearInterval(intervalId);
-  }, [item.play, item.tracker]);
+  }, [item]);
 
-  const getTimeFormat = (time) => {
-    let min = Math.floor(time / 60);
-    let sec = time - min * 60;
+
+  const getTimeFormat = (t) => {
+    let min = Math.floor(t / 60);
+    let sec = t - min * 60;
     return ("0" + min).slice(-2) + ":" + ("0" + sec).slice(-2);
   };
 
@@ -44,19 +49,22 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
     let newItem = { ...item };
     newItem.done = !item.done;
     changeTask(newItem, () => {
-        setItem(prev => {
-          prev.done = !prev.done;
-          prev.play = false;
-        });
-      }
-    );
+      setItem((prev) => {
+        prev.done = !prev.done;
+        prev.play = false;
+        return prev;
+      });
+    });
   };
   const onSubmit = (event) => {
     event.preventDefault();
     let newItem = { ...item };
     newItem.label = item.label;
     changeTask(newItem, () => {
-        setItem(prev => prev.canEdit = !prev.canEdit);
+        setItem(prev => {
+          prev.canEdit = !prev.canEdit
+          return prev
+        });
       }
     );
   };
@@ -64,33 +72,40 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
   return (
     <form onSubmit={onSubmit}>
       <TaskItemDiv
-        done={done}
+        done={item.done}
         children={
           <>
             <Input
               type="checkbox"
-              checked={done}
+              checked={item.done}
               onChange={onChangeCheckBox}
             />
             <Label>
-
               {item.canEdit ? (
                 <input
                   value={item.label}
                   onChange={(e) => {
-                    setItem(prev => prev.label = e.target.value);
+                    let newItem = { ...item };
+                    newItem.label = e.target.value;
+                    setItem(newItem);
                   }}
                 />
               ) : (
                 <SpanLabel> {label}</SpanLabel>
               )}
               <SpanTracker>
-                <ButtonPlay type={"button"} onClick={() => {
-                  setItem(prev => prev.play = true);
-                }}
+                <ButtonPlay type={"button"}
+                            onClick={() => {
+                              let newItem = { ...item };
+                              newItem.play = true;
+                              setItem(newItem);
+                            }}
                             disabled={item.canEdit} />
                 <ButtonStop type={"button"} onClick={() => {
-                  setItem(prev => prev.play = false);
+                  setItem(prev => {
+                    prev.play = false;
+                    return prev;
+                  });
                 }} />
                 {getTimeFormat(item.tracker)}
               </SpanTracker>
@@ -100,10 +115,10 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
             <ButtonEdit
               type={"button"}
               onClick={(e) => {
-                setItem(prev => {
-                  prev.play = false;
-                  prev.canEdit = true;
-                });
+                let newItem = { ...item };
+                newItem.play = false;
+                newItem.canEdit = true;
+                setItem(newItem);
               }}
             />
             <ButtonDestroy type={"button"} onClick={onDeleted} />

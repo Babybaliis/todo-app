@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Task } from "../task";
 
 
-const TaskList = ({ tasks, onDeleted, changeTask }) => {
+const TaskList = ({ tasks }) => {
 
   const elements = tasks.map((item) => {
     const { id, ...itemProps } = item;
@@ -14,12 +14,11 @@ const TaskList = ({ tasks, onDeleted, changeTask }) => {
         <Task
           {...itemProps}
           id={id}
-          onDeleted={() => onDeleted(item.id)}
-          changeTask={(item, callback) => changeTask(item, callback)}
         />
       </Li>
     );
   });
+
 
   return (
     <Section>
