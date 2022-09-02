@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Div, Span, Footers } from "./footer-style";
 import { MODE } from "../app/app";
 import PropTypes from "prop-types";
+import { Context } from "../context/Context";
 
-const Footer = ({ mode, setMode, doneItemCount, clearDoneItem }) => {
+const Footer = ({ mode, doneItemCount}) => {
+  const {clearDoneItem, setMode}=useContext(Context)
   return (
     <Footers>
       <Span>{doneItemCount} items left</Span>
@@ -25,9 +27,7 @@ const Footer = ({ mode, setMode, doneItemCount, clearDoneItem }) => {
 };
 
 Footer.propTypes = {
-  clearDoneItem: PropTypes.func.isRequired,
   doneItemCount: PropTypes.number.isRequired,
-  setMode: PropTypes.func.isRequired,
   mode: PropTypes.object.isRequired,
 };
 
