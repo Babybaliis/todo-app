@@ -27,14 +27,12 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
     let intervalId;
     if (item.play && !item.done) {
       intervalId = setInterval(() => {
-        let newItem = { ...item };
-        newItem.tracker += 1;
-        setItem(newItem);
+        setItem(prev => prev.tracker += 1);
 
       }, 1000);
     }
     return () => clearInterval(intervalId);
-  },[item.play,item.tracker]);
+  }, [item.play, item.tracker]);
 
   const getTimeFormat = (time) => {
     let min = Math.floor(time / 60);
@@ -46,10 +44,10 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
     let newItem = { ...item };
     newItem.done = !item.done;
     changeTask(newItem, () => {
-        let newItem = { ...item };
-        newItem.done = !newItem.done;
-        newItem.play = false;
-        setItem(newItem);
+        setItem(prev => {
+          prev.done = !prev.done;
+          prev.play = false;
+        });
       }
     );
   };
@@ -58,9 +56,7 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
     let newItem = { ...item };
     newItem.label = item.label;
     changeTask(newItem, () => {
-        let newItem = { ...item };
-        newItem.canEdit = !newItem.canEdit;
-        setItem(newItem);
+        setItem(prev => prev.canEdit = !prev.canEdit);
       }
     );
   };
@@ -82,9 +78,7 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
                 <input
                   value={item.label}
                   onChange={(e) => {
-                    let newItem = { ...item };
-                    newItem.label = e.target.value;
-                    setItem(newItem);
+                    setItem(prev => prev.label = e.target.value);
                   }}
                 />
               ) : (
@@ -92,15 +86,11 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
               )}
               <SpanTracker>
                 <ButtonPlay type={"button"} onClick={() => {
-                  let newItem = { ...item };
-                  newItem.play = true;
-                  setItem(newItem);
+                  setItem(prev => prev.play = true);
                 }}
                             disabled={item.canEdit} />
                 <ButtonStop type={"button"} onClick={() => {
-                  let newItem = { ...item };
-                  newItem.play = false;
-                  setItem(newItem);
+                  setItem(prev => prev.play = false);
                 }} />
                 {getTimeFormat(item.tracker)}
               </SpanTracker>
@@ -110,10 +100,10 @@ const Task = ({ done, label, id, time, changeTask, onDeleted }) => {
             <ButtonEdit
               type={"button"}
               onClick={(e) => {
-                let newItem = { ...item };
-                newItem.play = false;
-                newItem.canEdit = true;
-                setItem(newItem);
+                setItem(prev => {
+                  prev.play = false;
+                  prev.canEdit = true;
+                });
               }}
             />
             <ButtonDestroy type={"button"} onClick={onDeleted} />

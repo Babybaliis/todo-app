@@ -1,13 +1,14 @@
 import React from "react";
 import { Li, Ul, Section } from "./task-list-style";
 import PropTypes from "prop-types";
-import {Task} from "../task";
+import { Task } from "../task";
 
 
 const TaskList = ({ tasks, onDeleted, changeTask }) => {
 
   const elements = tasks.map((item) => {
     const { id, ...itemProps } = item;
+
     return (
       <Li key={item.id}>
         <Task
@@ -22,6 +23,7 @@ const TaskList = ({ tasks, onDeleted, changeTask }) => {
 
   return (
     <Section>
+
       <Ul>{elements}</Ul>
     </Section>
   );
@@ -30,7 +32,7 @@ const TaskList = ({ tasks, onDeleted, changeTask }) => {
 TaskList.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDeleted: PropTypes.func,
-  changeTask: PropTypes.func,
+  changeTask: PropTypes.func
 };
 
-export {TaskList}
+export { TaskList };
